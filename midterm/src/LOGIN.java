@@ -125,35 +125,24 @@ public class LOGIN extends javax.swing.JFrame {
 
     private void LoginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginButtonActionPerformed
         // TODO add your handling code here:
-       String username = usernameTextfield.getText().trim();
+    String username = usernameTextfield.getText().trim();
     String password = new String(PasswordTextfield.getPassword()).trim();
 
-    if(username.isEmpty() || password.isEmpty()){
+    if (username.isEmpty() || password.isEmpty()) {
         javax.swing.JOptionPane.showMessageDialog(this, "Fill all fields!");
         return;
     }
 
-    // CHECK IF USER REGISTERED
-    if(UserStore.savedUsername == null || UserStore.savedPassword == null){
-        javax.swing.JOptionPane.showMessageDialog(this, "No registered user found!");
-        return;
-    }
-
-    // VALIDATE LOGIN
-    if(username.equals(UserStore.savedUsername) &&
-       password.equals(UserStore.savedPassword)){
+    if (AuthFileManager.validateUser(username, password)) {
 
         javax.swing.JOptionPane.showMessageDialog(this, "Login Successful!");
 
-        new Dashboard().setVisible(true); // OPEN DASHBOARD
-        this.dispose(); // CLOSE LOGIN
+       new Dashboard().setVisible(true);
+        this.dispose();
 
     } else {
         javax.swing.JOptionPane.showMessageDialog(this, "Invalid Username or Password!");
-    }
-
-       
-        
+    }  
     }//GEN-LAST:event_LoginButtonActionPerformed
 
     /**

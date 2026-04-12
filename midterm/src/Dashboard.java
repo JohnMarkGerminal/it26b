@@ -9,9 +9,13 @@ import javax.swing.SortOrder;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
+
 public class Dashboard extends javax.swing.JFrame {
+    ArrayList<String[]> saiyans = new ArrayList<>();
     TableRowSorter<DefaultTableModel> sorter;
     DefaultTableModel model;
+    
+    
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Dashboard.class.getName());
 
@@ -24,17 +28,87 @@ public class Dashboard extends javax.swing.JFrame {
 
     model = (DefaultTableModel) scroll.getModel();
 
-    // Optional: clear sample rows from NetBeans
     model.setRowCount(0);
     sorter = new TableRowSorter<>(model);
     scroll.setRowSorter(sorter);
+
+    // 🔥 LOAD FILE DATA
+    saiyans = SaiyanManager.loadAll();
+
+    for (String[] s : saiyans) {
+        model.addRow(s);
+    }
 }
 
+    
+    private String encrypt(String text, int shift) {
+    StringBuilder sb = new StringBuilder();
+
+    for (char c : text.toCharArray()) {
+        sb.append((char)(c + shift));
+    }
+
+    return sb.toString();
+}
+
+private String decrypt(String text, int shift) {
+    StringBuilder sb = new StringBuilder();
+
+    for (char c : text.toCharArray()) {
+        sb.append((char)(c - shift));
+    }
+
+    return sb.toString();
+}
+
+private void saveToFile() {
+    try (java.io.PrintWriter pw =
+         new java.io.PrintWriter(new java.io.FileWriter("saiyan_data.txt"))) {
+
+        for (int i = 0; i < model.getRowCount(); i++) {
+
+            String line =
+                    model.getValueAt(i, 0) + "," +
+                    model.getValueAt(i, 1) + "," +
+                    model.getValueAt(i, 2) + "," +
+                    model.getValueAt(i, 3);
+
+            pw.println(encrypt(line, 3));
+        }
+
+    } catch (Exception e) {
+        javax.swing.JOptionPane.showMessageDialog(this,
+            "Error saving file!");
+    }
+}
+
+private void loadFromFile() {
+    try (java.io.BufferedReader br =
+         new java.io.BufferedReader(new java.io.FileReader("saiyan_data.txt"))) {
+
+        model.setRowCount(0);
+
+        String line;
+
+        while ((line = br.readLine()) != null) {
+
+            String decrypted = decrypt(line, 3);
+            String[] data = decrypted.split(",");
+
+            model.addRow(data);
+        }
+
+    } catch (Exception e) {
+        javax.swing.JOptionPane.showMessageDialog(this,
+            "Error loading file!");
+    }
+}
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel3 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
@@ -51,13 +125,14 @@ public class Dashboard extends javax.swing.JFrame {
         READBUTTON = new javax.swing.JButton();
         DELETEBUTTON = new javax.swing.JButton();
         UPDATEBUTTON = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+
+        jLabel3.setText("jLabel3");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setLayout(new java.awt.BorderLayout());
 
+        jPanel2.setBackground(new java.awt.Color(51, 51, 255));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
@@ -86,7 +161,7 @@ public class Dashboard extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(Titledashboard)
                     .addComponent(LOGO, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(9, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel2.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 990, -1));
@@ -95,12 +170,13 @@ public class Dashboard extends javax.swing.JFrame {
         LOGOUTBUTTON.setFont(new java.awt.Font("Showcard Gothic", 1, 14)); // NOI18N
         LOGOUTBUTTON.setText("LOG OUT");
         LOGOUTBUTTON.addActionListener(this::LOGOUTBUTTONActionPerformed);
-        jPanel2.add(LOGOUTBUTTON, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 430, 200, 40));
+        jPanel2.add(LOGOUTBUTTON, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 410, 200, 40));
 
         searchBUTTON.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         searchBUTTON.addActionListener(this::searchBUTTONActionPerformed);
         jPanel2.add(searchBUTTON, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 120, 203, -1));
 
+        Searchname.setBackground(new java.awt.Color(255, 51, 0));
         Searchname.setFont(new java.awt.Font("Showcard Gothic", 2, 14)); // NOI18N
         Searchname.setText("Search:");
         jPanel2.add(Searchname, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 120, -1, -1));
@@ -115,7 +191,7 @@ public class Dashboard extends javax.swing.JFrame {
 
         sortname.setFont(new java.awt.Font("Showcard Gothic", 2, 12)); // NOI18N
         sortname.setText("Sort:");
-        jPanel2.add(sortname, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 110, -1, -1));
+        jPanel2.add(sortname, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 116, -1, 20));
 
         scroll.setBorder(new javax.swing.border.MatteBorder(null));
         scroll.setModel(new javax.swing.table.DefaultTableModel(
@@ -137,37 +213,31 @@ public class Dashboard extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(scroll);
 
-        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 140, 485, 360));
+        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 170, 485, 230));
 
         CREATEBUTTON.setBackground(new java.awt.Color(255, 51, 0));
         CREATEBUTTON.setFont(new java.awt.Font("Showcard Gothic", 1, 12)); // NOI18N
         CREATEBUTTON.setText("Create");
         CREATEBUTTON.addActionListener(this::CREATEBUTTONActionPerformed);
-        jPanel2.add(CREATEBUTTON, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 160, 200, 40));
+        jPanel2.add(CREATEBUTTON, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 150, 200, 40));
 
         READBUTTON.setBackground(new java.awt.Color(255, 51, 0));
         READBUTTON.setFont(new java.awt.Font("Showcard Gothic", 1, 12)); // NOI18N
         READBUTTON.setText("Read");
         READBUTTON.addActionListener(this::READBUTTONActionPerformed);
-        jPanel2.add(READBUTTON, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 230, 200, 40));
+        jPanel2.add(READBUTTON, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 210, 200, 40));
 
         DELETEBUTTON.setBackground(new java.awt.Color(255, 51, 0));
         DELETEBUTTON.setFont(new java.awt.Font("Showcard Gothic", 1, 12)); // NOI18N
         DELETEBUTTON.setText("Delete");
         DELETEBUTTON.addActionListener(this::DELETEBUTTONActionPerformed);
-        jPanel2.add(DELETEBUTTON, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 290, 200, 40));
+        jPanel2.add(DELETEBUTTON, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 340, 200, 40));
 
         UPDATEBUTTON.setBackground(new java.awt.Color(255, 51, 0));
         UPDATEBUTTON.setFont(new java.awt.Font("Showcard Gothic", 1, 14)); // NOI18N
         UPDATEBUTTON.setText("Update");
         UPDATEBUTTON.addActionListener(this::UPDATEBUTTONActionPerformed);
-        jPanel2.add(UPDATEBUTTON, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 360, 200, 40));
-
-        jLabel1.setText("jLabel1");
-        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 370, 480, 130));
-
-        jLabel2.setText("jLabel2");
-        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 410, -1, -1));
+        jPanel2.add(UPDATEBUTTON, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 270, 200, 40));
 
         jPanel1.add(jPanel2, java.awt.BorderLayout.LINE_START);
 
@@ -186,47 +256,32 @@ public class Dashboard extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void SortButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SortButtonActionPerformed
-        // TODO add your handling code here:
-       
-    String selected = SortButton.getSelectedItem().toString();
-
-    TableRowSorter<DefaultTableModel> sorter =
-            new TableRowSorter<>(model);
-
-    scroll.setRowSorter(sorter);
-    
-    sorter.setComparator(1, (a, b) -> {
-    int n1 = Integer.parseInt(a.toString());
-    int n2 = Integer.parseInt(b.toString());
-    return Integer.compare(n1, n2);
-});
+        // TODO add your handling code here:     
+     String selected = SortButton.getSelectedItem().toString();
 
     List<RowSorter.SortKey> sortKeys = new ArrayList<>();
 
     switch (selected) {
 
-        case "Name A-Z":
+        case "Name":
             sortKeys.add(new RowSorter.SortKey(0, SortOrder.ASCENDING));
             break;
 
-        case "Name Z-A":
-            sortKeys.add(new RowSorter.SortKey(0, SortOrder.DESCENDING));
-            break;
-
-        case "Power High-Low":
+        case "Power":
             sortKeys.add(new RowSorter.SortKey(1, SortOrder.DESCENDING));
             break;
 
-        case "Power Low-High":
-            sortKeys.add(new RowSorter.SortKey(1, SortOrder.ASCENDING));
+        case "Transform":
+            sortKeys.add(new RowSorter.SortKey(2, SortOrder.ASCENDING));
+            break;
+
+        case "Universe":
+            sortKeys.add(new RowSorter.SortKey(3, SortOrder.ASCENDING));
             break;
     }
 
     sorter.setSortKeys(sortKeys);
     sorter.sort();
-
-    
-        
     }//GEN-LAST:event_SortButtonActionPerformed
 
     private void searchBUTTONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBUTTONActionPerformed
@@ -276,69 +331,92 @@ public class Dashboard extends javax.swing.JFrame {
 
     private void DELETEBUTTONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DELETEBUTTONActionPerformed
         // TODO add your handling code here:
-        int selectedRow = scroll.getSelectedRow();
+    int row = scroll.getSelectedRow();
 
-    if (selectedRow == -1) {
+    if (row == -1) {
         javax.swing.JOptionPane.showMessageDialog(this, "Select a row first!");
-    } else {
-        model.removeRow(selectedRow);
-        javax.swing.JOptionPane.showMessageDialog(this, "Deleted Successfully!");
+        return;
     }
+
+    saiyans.remove(row);
+    model.removeRow(row);
+
+    SaiyanManager.saveAll(saiyans);
+
+    javax.swing.JOptionPane.showMessageDialog(this, "Deleted & Saved!");
 
 
     }//GEN-LAST:event_DELETEBUTTONActionPerformed
 
     private void UPDATEBUTTONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UPDATEBUTTONActionPerformed
         // TODO add your handling code here:
-        int row = scroll.getSelectedRow();
+    int row = scroll.getSelectedRow();
 
     if (row == -1) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Select a row to update!");
+        javax.swing.JOptionPane.showMessageDialog(this, "Select a row!");
         return;
     }
 
-    String name = javax.swing.JOptionPane.showInputDialog(this, "New Name:", model.getValueAt(row, 0));
-    String power = javax.swing.JOptionPane.showInputDialog(this, "New Power Level:", model.getValueAt(row, 1));
-    String transform = javax.swing.JOptionPane.showInputDialog(this, "New Transformation:", model.getValueAt(row, 2));
-    String universe = javax.swing.JOptionPane.showInputDialog(this, "New Universe:", model.getValueAt(row, 3));
+    String name = javax.swing.JOptionPane.showInputDialog(this, "New Name:", saiyans.get(row)[0]);
+    String power = javax.swing.JOptionPane.showInputDialog(this, "New Power:", saiyans.get(row)[1]);
+    String transform = javax.swing.JOptionPane.showInputDialog(this, "New Transformation:", saiyans.get(row)[2]);
+    String universe = javax.swing.JOptionPane.showInputDialog(this, "New Universe:", saiyans.get(row)[3]);
 
+    String[] updated = {name, power, transform, universe};
+
+    saiyans.set(row, updated);
     model.setValueAt(name, row, 0);
     model.setValueAt(power, row, 1);
     model.setValueAt(transform, row, 2);
     model.setValueAt(universe, row, 3);
 
-    javax.swing.JOptionPane.showMessageDialog(this, "Updated Successfully!");
+    SaiyanManager.saveAll(saiyans);
+
+    javax.swing.JOptionPane.showMessageDialog(this, "Updated & Saved!");
     }//GEN-LAST:event_UPDATEBUTTONActionPerformed
 
     private void READBUTTONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_READBUTTONActionPerformed
         // TODO add your handling code here:
-        javax.swing.JOptionPane.showMessageDialog(this, "Table Loaded Successfully!");
+    int row = scroll.getSelectedRow();
 
-    // optional: show row count
-    int rows = model.getRowCount();
-    javax.swing.JOptionPane.showMessageDialog(this, "Total Records: " + rows);
+    if (row == -1) {
+        javax.swing.JOptionPane.showMessageDialog(this,
+            "Please select a Saiyan first!");
+        return;
+    }
 
+    String[] s = saiyans.get(row);
+
+    String message =
+            "🔥 SAIYAN DETAILS 🔥\n"
+          + "Name: " + s[0] + "\n"
+          + "Power Level: " + s[1] + "\n"
+          + "Transformation: " + s[2] + "\n"
+          + "Universe: " + s[3];
+
+    javax.swing.JOptionPane.showMessageDialog(this, message);
     }//GEN-LAST:event_READBUTTONActionPerformed
 
     private void CREATEBUTTONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CREATEBUTTONActionPerformed
         // TODO add your handling code here:
         
         
-        String name = javax.swing.JOptionPane.showInputDialog(this, "Enter Name:");
+    String name = javax.swing.JOptionPane.showInputDialog(this, "Enter Name:");
     String power = javax.swing.JOptionPane.showInputDialog(this, "Enter Power Level:");
     String transform = javax.swing.JOptionPane.showInputDialog(this, "Enter Transformation:");
     String universe = javax.swing.JOptionPane.showInputDialog(this, "Enter Universe:");
 
     if (name == null || power == null || transform == null || universe == null) return;
 
-    model.addRow(new Object[]{name, power, transform, universe});
+    String[] newSaiyan = {name, power, transform, universe};
 
-    javax.swing.JOptionPane.showMessageDialog(this, "Data Added!");
-    
-    if (name == null || name.isEmpty()) {
-    JOptionPane.showMessageDialog(this, "Name cannot be empty!");
-    return;
-}
+    saiyans.add(newSaiyan);
+    model.addRow(newSaiyan);
+
+    SaiyanManager.saveAll(saiyans);
+
+    javax.swing.JOptionPane.showMessageDialog(this, "Saiyan Added & Saved!");
+
 
 
     }//GEN-LAST:event_CREATEBUTTONActionPerformed
@@ -378,8 +456,7 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> SortButton;
     private javax.swing.JLabel Titledashboard;
     private javax.swing.JButton UPDATEBUTTON;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
