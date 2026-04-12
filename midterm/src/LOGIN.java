@@ -7,7 +7,7 @@
  *
  * @author lynee
  */
- import User.UserStore;
+import User.UserStore;
 public class LOGIN extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(LOGIN.class.getName());
@@ -126,28 +126,13 @@ public class LOGIN extends javax.swing.JFrame {
     private void LoginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginButtonActionPerformed
         // TODO add your handling code here:
         String username = usernameTextfield.getText().trim();
-    String password = new String(PasswordTextfield.getPassword()).trim();
-
-    if (username.isEmpty() || password.isEmpty()) {
+     String password = new String(PasswordTextfield.getPassword()).trim();
+     
+if(username.isEmpty() || password.isEmpty()){
         javax.swing.JOptionPane.showMessageDialog(this, "Fill all fields!");
         return;
     }
 
-    if (UserStore.savedUsername == null || UserStore.savedPassword == null) {
-        javax.swing.JOptionPane.showMessageDialog(this, "No registered user found!");
-        return;
-    }
-
-    if (username.equals(UserStore.savedUsername) &&
-        password.equals(UserStore.savedPassword)) {
-
-        javax.swing.JOptionPane.showMessageDialog(this, "Login Successful!");
-        new Dashboard().setVisible(true);
-        this.dispose();
-
-    } else {
-        javax.swing.JOptionPane.showMessageDialog(this, "Invalid Username or Password!");
-    }
 
 
     
