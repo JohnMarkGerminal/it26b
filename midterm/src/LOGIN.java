@@ -47,18 +47,18 @@ public class LOGIN extends javax.swing.JFrame {
         getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 230, 250, 30));
 
         jLabel1.setBackground(new java.awt.Color(204, 204, 204));
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Showcard Gothic", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(51, 51, 255));
         jLabel1.setText("WARRIOR ID");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 200, -1, -1));
 
         jLabel2.setBackground(new java.awt.Color(204, 204, 204));
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Showcard Gothic", 1, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(51, 51, 255));
         jLabel2.setText("KAI PASSPHASE");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 270, -1, -1));
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI Black", 1, 36)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Showcard Gothic", 1, 36)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(51, 51, 255));
         jLabel3.setText("USER LOGIN");
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 120, 250, -1));
@@ -71,10 +71,10 @@ public class LOGIN extends javax.swing.JFrame {
         jLabel5.setText("(Password):");
         getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 270, -1, -1));
 
-        jButton1.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
+        jButton1.setFont(new java.awt.Font("Showcard Gothic", 1, 18)); // NOI18N
         jButton1.setForeground(new java.awt.Color(51, 51, 255));
         jButton1.setText("LOGIN");
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 380, 110, -1));
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 370, 110, -1));
 
         jLabel6.setText("To be come a Supersaiyan?");
         getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 420, 180, 24));
