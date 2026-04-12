@@ -7,14 +7,17 @@
  *
  * @author lynee
  */
+ import User.UserStore;
 public class LOGIN extends javax.swing.JFrame {
+    
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(LOGIN.class.getName());
 
-   private static final java.util.logging.Logger logger =
-            java.util.logging.Logger.getLogger(LOGIN.class.getName());
-
+    /**
+     * Creates new form LOGIN
+     */
     public LOGIN() {
         initComponents();
-        setLocationRelativeTo(null); // center window
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -122,19 +125,34 @@ public class LOGIN extends javax.swing.JFrame {
 
     private void LoginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginButtonActionPerformed
         // TODO add your handling code here:
-        String username = usernameTextfield.getText();
-        String password = new String(PasswordTextfield.getPassword());
+        String username = usernameTextfield.getText().trim();
+    String password = new String(PasswordTextfield.getPassword()).trim();
 
-// TEMP LOGIN (you can change later to MySQL)
-if (username.equals("admin") && password.equals("1234")) {
+    if (username.isEmpty() || password.isEmpty()) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Fill all fields!");
+        return;
+    }
 
-            javax.swing.JOptionPane.showMessageDialog(this, "Login Successful!");
+    if (UserStore.savedUsername == null || UserStore.savedPassword == null) {
+        javax.swing.JOptionPane.showMessageDialog(this, "No registered user found!");
+        return;
+    }
 
-            new Dashboard().setVisible(true);
-            this.dispose();
-} else {
-    javax.swing.JOptionPane.showMessageDialog(this, "Invalid Username or Password!");
-}
+    if (username.equals(UserStore.savedUsername) &&
+        password.equals(UserStore.savedPassword)) {
+
+        javax.swing.JOptionPane.showMessageDialog(this, "Login Successful!");
+        new Dashboard().setVisible(true);
+        this.dispose();
+
+    } else {
+        javax.swing.JOptionPane.showMessageDialog(this, "Invalid Username or Password!");
+    }
+
+
+    
+    
+
         
     }//GEN-LAST:event_LoginButtonActionPerformed
 

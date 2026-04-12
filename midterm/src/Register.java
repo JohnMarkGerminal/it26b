@@ -7,6 +7,7 @@
  *
  * @author lynee
  */
+import User.UserStore;
 public class Register extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Register.class.getName());
@@ -16,6 +17,7 @@ public class Register extends javax.swing.JFrame {
      */
     public Register() {
         initComponents();
+        setLocationRelativeTo(null); // center window
     }
 
     /**
@@ -99,6 +101,7 @@ public class Register extends javax.swing.JFrame {
     private void RegisterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegisterButtonActionPerformed
         // TODO add your handling code here:
         
+        
         String username = usernameTextfield.getText();
 String password = new String(passwordTextfield.getPassword());
 String confirm = new String(ConfirmPasswordTextfield.getPassword());
@@ -110,9 +113,12 @@ else if(!password.equals(confirm)){
     javax.swing.JOptionPane.showMessageDialog(this, "Passwords do not match!");
 } 
 else {
+    // SAVE USER DATA
+    UserStore.savedUsername = username;
+    UserStore.savedPassword = password;
+
     javax.swing.JOptionPane.showMessageDialog(this, "Registered Successfully!");
-    
-    // go to login after register
+
     new LOGIN().setVisible(true);
     this.dispose();
 }
