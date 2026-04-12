@@ -2,13 +2,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-
-/**
- *
- * @author lynee
- */
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
+import javax.swing.RowSorter;
+import javax.swing.SortOrder;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
 public class Dashboard extends javax.swing.JFrame {
+    TableRowSorter<DefaultTableModel> sorter;
     DefaultTableModel model;
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Dashboard.class.getName());
@@ -24,6 +26,8 @@ public class Dashboard extends javax.swing.JFrame {
 
     // Optional: clear sample rows from NetBeans
     model.setRowCount(0);
+    sorter = new TableRowSorter<>(model);
+    scroll.setRowSorter(sorter);
 }
 
     
@@ -47,6 +51,8 @@ public class Dashboard extends javax.swing.JFrame {
         READBUTTON = new javax.swing.JButton();
         DELETEBUTTON = new javax.swing.JButton();
         UPDATEBUTTON = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -89,27 +95,27 @@ public class Dashboard extends javax.swing.JFrame {
         LOGOUTBUTTON.setFont(new java.awt.Font("Showcard Gothic", 1, 14)); // NOI18N
         LOGOUTBUTTON.setText("LOG OUT");
         LOGOUTBUTTON.addActionListener(this::LOGOUTBUTTONActionPerformed);
-        jPanel2.add(LOGOUTBUTTON, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 430, 200, 40));
+        jPanel2.add(LOGOUTBUTTON, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 430, 200, 40));
 
         searchBUTTON.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         searchBUTTON.addActionListener(this::searchBUTTONActionPerformed);
-        jPanel2.add(searchBUTTON, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 120, 203, -1));
+        jPanel2.add(searchBUTTON, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 120, 203, -1));
 
         Searchname.setFont(new java.awt.Font("Showcard Gothic", 2, 14)); // NOI18N
         Searchname.setText("Search:");
-        jPanel2.add(Searchname, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 120, -1, -1));
+        jPanel2.add(Searchname, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 120, -1, -1));
 
         SortButton.setEditable(true);
         SortButton.setFont(new java.awt.Font("Showcard Gothic", 1, 14)); // NOI18N
         SortButton.setMaximumRowCount(5);
-        SortButton.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        SortButton.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Name", "Power", "Transform", "Universe" }));
         SortButton.setName("Power Level"); // NOI18N
         SortButton.addActionListener(this::SortButtonActionPerformed);
         jPanel2.add(SortButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 110, 111, -1));
 
         sortname.setFont(new java.awt.Font("Showcard Gothic", 2, 12)); // NOI18N
         sortname.setText("Sort:");
-        jPanel2.add(sortname, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 120, -1, -1));
+        jPanel2.add(sortname, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 110, -1, -1));
 
         scroll.setBorder(new javax.swing.border.MatteBorder(null));
         scroll.setModel(new javax.swing.table.DefaultTableModel(
@@ -131,33 +137,39 @@ public class Dashboard extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(scroll);
 
-        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 140, 485, 360));
+        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 140, 485, 360));
 
         CREATEBUTTON.setBackground(new java.awt.Color(255, 51, 0));
         CREATEBUTTON.setFont(new java.awt.Font("Showcard Gothic", 1, 12)); // NOI18N
         CREATEBUTTON.setText("Create");
         CREATEBUTTON.addActionListener(this::CREATEBUTTONActionPerformed);
-        jPanel2.add(CREATEBUTTON, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 170, 200, 40));
+        jPanel2.add(CREATEBUTTON, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 160, 200, 40));
 
         READBUTTON.setBackground(new java.awt.Color(255, 51, 0));
         READBUTTON.setFont(new java.awt.Font("Showcard Gothic", 1, 12)); // NOI18N
         READBUTTON.setText("Read");
         READBUTTON.addActionListener(this::READBUTTONActionPerformed);
-        jPanel2.add(READBUTTON, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 235, 200, 40));
+        jPanel2.add(READBUTTON, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 230, 200, 40));
 
         DELETEBUTTON.setBackground(new java.awt.Color(255, 51, 0));
         DELETEBUTTON.setFont(new java.awt.Font("Showcard Gothic", 1, 12)); // NOI18N
         DELETEBUTTON.setText("Delete");
         DELETEBUTTON.addActionListener(this::DELETEBUTTONActionPerformed);
-        jPanel2.add(DELETEBUTTON, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 300, 200, 40));
+        jPanel2.add(DELETEBUTTON, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 290, 200, 40));
 
         UPDATEBUTTON.setBackground(new java.awt.Color(255, 51, 0));
         UPDATEBUTTON.setFont(new java.awt.Font("Showcard Gothic", 1, 14)); // NOI18N
         UPDATEBUTTON.setText("Update");
         UPDATEBUTTON.addActionListener(this::UPDATEBUTTONActionPerformed);
-        jPanel2.add(UPDATEBUTTON, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 370, 200, 40));
+        jPanel2.add(UPDATEBUTTON, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 360, 200, 40));
 
-        jPanel1.add(jPanel2, java.awt.BorderLayout.LINE_END);
+        jLabel1.setText("jLabel1");
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 370, 480, 130));
+
+        jLabel2.setText("jLabel2");
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 410, -1, -1));
+
+        jPanel1.add(jPanel2, java.awt.BorderLayout.LINE_START);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -175,26 +187,68 @@ public class Dashboard extends javax.swing.JFrame {
 
     private void SortButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SortButtonActionPerformed
         // TODO add your handling code here:
-        javax.swing.table.TableRowSorter<DefaultTableModel> sorter =
-            new javax.swing.table.TableRowSorter<>(model);
+       
+    String selected = SortButton.getSelectedItem().toString();
+
+    TableRowSorter<DefaultTableModel> sorter =
+            new TableRowSorter<>(model);
 
     scroll.setRowSorter(sorter);
+    
+    sorter.setComparator(1, (a, b) -> {
+    int n1 = Integer.parseInt(a.toString());
+    int n2 = Integer.parseInt(b.toString());
+    return Integer.compare(n1, n2);
+});
 
-    sorter.setSortKeys(java.util.Collections.singletonList(
-            new javax.swing.RowSorter.SortKey(1, javax.swing.SortOrder.DESCENDING)
-    ));
+    List<RowSorter.SortKey> sortKeys = new ArrayList<>();
+
+    switch (selected) {
+
+        case "Name A-Z":
+            sortKeys.add(new RowSorter.SortKey(0, SortOrder.ASCENDING));
+            break;
+
+        case "Name Z-A":
+            sortKeys.add(new RowSorter.SortKey(0, SortOrder.DESCENDING));
+            break;
+
+        case "Power High-Low":
+            sortKeys.add(new RowSorter.SortKey(1, SortOrder.DESCENDING));
+            break;
+
+        case "Power Low-High":
+            sortKeys.add(new RowSorter.SortKey(1, SortOrder.ASCENDING));
+            break;
+    }
+
+    sorter.setSortKeys(sortKeys);
+    sorter.sort();
+
+    
+        
     }//GEN-LAST:event_SortButtonActionPerformed
 
     private void searchBUTTONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBUTTONActionPerformed
         // TODO add your handling code here:
         String search = searchBUTTON.getText().toLowerCase();
 
+    javax.swing.table.TableRowSorter<DefaultTableModel> sorter =
+            (javax.swing.table.TableRowSorter<DefaultTableModel>) scroll.getRowSorter();
+
+    if (sorter == null) {
+        sorter = new javax.swing.table.TableRowSorter<>(model);
+        scroll.setRowSorter(sorter);
+    }
+
     for (int i = 0; i < model.getRowCount(); i++) {
 
         String name = model.getValueAt(i, 0).toString().toLowerCase();
 
         if (name.contains(search)) {
-            scroll.setRowSelectionInterval(i, i);
+
+            int viewRow = scroll.convertRowIndexToView(i);
+            scroll.setRowSelectionInterval(viewRow, viewRow);
             return;
         }
     }
@@ -268,6 +322,8 @@ public class Dashboard extends javax.swing.JFrame {
 
     private void CREATEBUTTONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CREATEBUTTONActionPerformed
         // TODO add your handling code here:
+        
+        
         String name = javax.swing.JOptionPane.showInputDialog(this, "Enter Name:");
     String power = javax.swing.JOptionPane.showInputDialog(this, "Enter Power Level:");
     String transform = javax.swing.JOptionPane.showInputDialog(this, "Enter Transformation:");
@@ -278,6 +334,11 @@ public class Dashboard extends javax.swing.JFrame {
     model.addRow(new Object[]{name, power, transform, universe});
 
     javax.swing.JOptionPane.showMessageDialog(this, "Data Added!");
+    
+    if (name == null || name.isEmpty()) {
+    JOptionPane.showMessageDialog(this, "Name cannot be empty!");
+    return;
+}
 
 
     }//GEN-LAST:event_CREATEBUTTONActionPerformed
@@ -317,6 +378,8 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> SortButton;
     private javax.swing.JLabel Titledashboard;
     private javax.swing.JButton UPDATEBUTTON;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
