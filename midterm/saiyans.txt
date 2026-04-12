@@ -2,3 +2,4 @@ vegeto,1111111111,saiyan1,earth3
 gogeta,999999,saiyan god,mars
 guko,99999999991,saiyan99999999,earth616
 jum,9999999,saiyan999999999999999999999,earh
+jum2,645345,saiyan3,mars

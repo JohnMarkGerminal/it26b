@@ -4,42 +4,66 @@ public class AuthFileManager {
 
     private static final String FILE_NAME = "users.txt";
 
-    // SAVE USER (REGISTER)
-    public static void saveUser(String username, String password) {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(FILE_NAME, true))) {
+    // REGISTER
+    public static boolean registerUser(String username, String password) {
+        try {
+            File file = new File(FILE_NAME);
 
-            bw.write(username + "," + password);
-            bw.newLine();
+            // create file if not exists
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+
+            // check if username already exists
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts[0].equals(username)) {
+                    reader.close();
+                    return false; // already exists
+                }
+            }
+            reader.close();
+
+            // save user
+            BufferedWriter writer = new BufferedWriter(new FileWriter(file, true));
+            writer.write(username + "," + password);
+            writer.newLine();
+            writer.close();
+
+            return true;
 
         } catch (IOException e) {
-            System.out.println("Error saving user: " + e.getMessage());
+            e.printStackTrace();
+            return false;
         }
     }
 
     // LOGIN VALIDATION
     public static boolean validateUser(String username, String password) {
+        try {
+            File file = new File(FILE_NAME);
 
-        try (BufferedReader br = new BufferedReader(new FileReader(FILE_NAME))) {
+            if (!file.exists()) return false;
 
+            BufferedReader reader = new BufferedReader(new FileReader(file));
             String line;
 
-            while ((line = br.readLine()) != null) {
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",");
 
-                String[] data = line.split(",");
-
-                if (data.length == 2) {
-
-                    String fileUser = data[0];
-                    String filePass = data[1];
-
-                    if (fileUser.equals(username) && filePass.equals(password)) {
-                        return true;
-                    }
+                if (parts[0].equals(username) && parts[1].equals(password)) {
+                    reader.close();
+                    return true;
                 }
             }
 
+            reader.close();
+
         } catch (IOException e) {
-            System.out.println("Error reading file: " + e.getMessage());
+            e.printStackTrace();
         }
 
         return false;

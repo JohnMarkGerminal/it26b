@@ -1,13 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 
-/**
- *
- * @author lynee
- */
-import User.UserStore;
+
 public class Register extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Register.class.getName());
@@ -102,26 +94,34 @@ public class Register extends javax.swing.JFrame {
         // TODO add your handling code here:
         
         
-        String username = usernameTextfield.getText();
-String password = new String(passwordTextfield.getPassword());
-String confirm = new String(ConfirmPasswordTextfield.getPassword());
+   String username = usernameTextfield.getText().trim();
+    String password = new String(passwordTextfield.getPassword()).trim();
+    String confirm = new String(ConfirmPasswordTextfield.getPassword()).trim();
 
-if(username.isEmpty() || password.isEmpty() || confirm.isEmpty()){
-    javax.swing.JOptionPane.showMessageDialog(this, "Fill all fields!");
-} 
+    if(username.isEmpty() || password.isEmpty() || confirm.isEmpty()){
+        javax.swing.JOptionPane.showMessageDialog(this, "Fill all fields!");
+        return;
+    } 
 else if(!password.equals(confirm)){
     javax.swing.JOptionPane.showMessageDialog(this, "Passwords do not match!");
-} 
-else {
-    // SAVE USER DATA
-    UserStore.savedUsername = username;
-    UserStore.savedPassword = password;
+} if(!password.equals(confirm)){
+        javax.swing.JOptionPane.showMessageDialog(this, "Passwords do not match!");
+        return;
+    }
+String encryptedPassword = CaesarCipher.encrypt(password, 3);
+boolean success = AuthFileManager.registerUser(username, encryptedPassword);
 
-    javax.swing.JOptionPane.showMessageDialog(this, "Registered Successfully!");
+    if(success){
+        javax.swing.JOptionPane.showMessageDialog(this, "Registered Successfully!");
 
-    new LOGIN().setVisible(true);
-    this.dispose();
-}
+        new LOGIN().setVisible(true);
+        this.dispose();
+    } else {
+javax.swing.JOptionPane.showMessageDialog(this, "Username already exists!");
+    }
+
+    
+
     }//GEN-LAST:event_RegisterButtonActionPerformed
 
     private void LoginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginButtonActionPerformed

@@ -1,13 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 
-/**
- *
- * @author lynee
- */
-import User.UserStore;
+
 public class LOGIN extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(LOGIN.class.getName());
@@ -118,8 +110,7 @@ public class LOGIN extends javax.swing.JFrame {
            PasswordTextfield.setEchoChar('*'); // hide password
                     
         
-       
-       
+         
         }
     }//GEN-LAST:event_ShowPassowrdButtonActionPerformed
 
@@ -132,17 +123,18 @@ public class LOGIN extends javax.swing.JFrame {
         javax.swing.JOptionPane.showMessageDialog(this, "Fill all fields!");
         return;
     }
-
-    if (AuthFileManager.validateUser(username, password)) {
+  String encryptedPassword = CaesarCipher.encrypt(password, 3);
+  
+    if (AuthFileManager.validateUser(username, encryptedPassword)) {
 
         javax.swing.JOptionPane.showMessageDialog(this, "Login Successful!");
 
-       new Dashboard().setVisible(true);
+        new Dashboard().setVisible(true);
         this.dispose();
-
     } else {
         javax.swing.JOptionPane.showMessageDialog(this, "Invalid Username or Password!");
-    }  
+    }
+
     }//GEN-LAST:event_LoginButtonActionPerformed
 
     /**
