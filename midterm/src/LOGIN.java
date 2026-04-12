@@ -74,6 +74,7 @@ public class LOGIN extends javax.swing.JFrame {
         jButton1.setFont(new java.awt.Font("Showcard Gothic", 1, 18)); // NOI18N
         jButton1.setForeground(new java.awt.Color(51, 51, 255));
         jButton1.setText("LOGIN");
+        jButton1.addActionListener(this::jButton1ActionPerformed);
         getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 370, 110, -1));
 
         jLabel6.setText("To be come a Supersaiyan?");
@@ -103,6 +104,8 @@ public class LOGIN extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        new Register().setVisible(true); // open register
+       this.dispose(); // close login
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
@@ -117,6 +120,25 @@ public class LOGIN extends javax.swing.JFrame {
        
         }
     }//GEN-LAST:event_jCheckBox1ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        String username = jTextField1.getText();
+String password = new String(jPasswordField1.getPassword());
+
+// TEMPORARY (for testing only)
+if(username.equals("admin") && password.equals("1234")){
+    javax.swing.JOptionPane.showMessageDialog(this, "Login Successful!");
+    
+    // open dashboard (optional)
+    // new Dashboard().setVisible(true);
+    // this.dispose();
+    
+} else {
+    javax.swing.JOptionPane.showMessageDialog(this, "Invalid Username or Password!");
+}
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments

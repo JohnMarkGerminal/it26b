@@ -92,10 +92,29 @@ public class Register extends javax.swing.JFrame {
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
+        new LOGIN().setVisible(true); // open login
+        this.dispose(); // close register
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        String username = jTextField1.getText();
+String password = new String(jPasswordField1.getPassword());
+String confirm = new String(jPasswordField2.getPassword());
+
+if(username.isEmpty() || password.isEmpty() || confirm.isEmpty()){
+    javax.swing.JOptionPane.showMessageDialog(this, "Fill all fields!");
+} 
+else if(!password.equals(confirm)){
+    javax.swing.JOptionPane.showMessageDialog(this, "Passwords do not match!");
+} 
+else {
+    javax.swing.JOptionPane.showMessageDialog(this, "Registered Successfully!");
+    
+    // go to login after register
+    new LOGIN().setVisible(true);
+    this.dispose();
+}
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
