@@ -205,11 +205,7 @@ public class Dashboard extends javax.swing.JFrame {
 
     private void LOGOUTBUTTONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LOGOUTBUTTONActionPerformed
         // TODO add your handling code here:
-        new LOGIN().setVisible(true);
-        this.dispose();
-      
-
-    int confirm = javax.swing.JOptionPane.showConfirmDialog(
+        int confirm = javax.swing.JOptionPane.showConfirmDialog(
             this,
             "Are you sure you want to logout?",
             "Logout",
@@ -268,7 +264,6 @@ public class Dashboard extends javax.swing.JFrame {
     int rows = model.getRowCount();
     javax.swing.JOptionPane.showMessageDialog(this, "Total Records: " + rows);
 
-        javax.swing.JOptionPane.showMessageDialog(this, "READ CLICKED");
     }//GEN-LAST:event_READBUTTONActionPerformed
 
     private void CREATEBUTTONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CREATEBUTTONActionPerformed
