@@ -8,14 +8,13 @@
  * @author lynee
  */
 public class LOGIN extends javax.swing.JFrame {
-    
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(LOGIN.class.getName());
 
-    /**
-     * Creates new form LOGIN
-     */
+   private static final java.util.logging.Logger logger =
+            java.util.logging.Logger.getLogger(LOGIN.class.getName());
+
     public LOGIN() {
         initComponents();
+        setLocationRelativeTo(null); // center window
     }
 
     /**
@@ -27,118 +26,117 @@ public class LOGIN extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTextField1 = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jLabel6 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
-        jPasswordField1 = new javax.swing.JPasswordField();
-        jCheckBox1 = new javax.swing.JCheckBox();
-        jLabel7 = new javax.swing.JLabel();
+        usernameTextfield = new javax.swing.JTextField();
+        USERNAMENAME = new javax.swing.JLabel();
+        PasswordName = new javax.swing.JLabel();
+        USERLOGINNAME = new javax.swing.JLabel();
+        USERNAME = new javax.swing.JLabel();
+        Passwordname = new javax.swing.JLabel();
+        LoginButton = new javax.swing.JButton();
+        nameREGISTER = new javax.swing.JLabel();
+        ResgisterButton = new javax.swing.JButton();
+        PasswordTextfield = new javax.swing.JPasswordField();
+        ShowPassowrdButton = new javax.swing.JCheckBox();
+        Background = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jTextField1.addActionListener(this::jTextField1ActionPerformed);
-        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 230, 250, 30));
+        usernameTextfield.addActionListener(this::usernameTextfieldActionPerformed);
+        getContentPane().add(usernameTextfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 230, 250, 30));
 
-        jLabel1.setBackground(new java.awt.Color(204, 204, 204));
-        jLabel1.setFont(new java.awt.Font("Showcard Gothic", 1, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(51, 51, 255));
-        jLabel1.setText("WARRIOR ID");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 200, -1, -1));
+        USERNAMENAME.setBackground(new java.awt.Color(204, 204, 204));
+        USERNAMENAME.setFont(new java.awt.Font("Showcard Gothic", 1, 18)); // NOI18N
+        USERNAMENAME.setForeground(new java.awt.Color(51, 51, 255));
+        USERNAMENAME.setText("WARRIOR ID");
+        getContentPane().add(USERNAMENAME, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 200, -1, -1));
 
-        jLabel2.setBackground(new java.awt.Color(204, 204, 204));
-        jLabel2.setFont(new java.awt.Font("Showcard Gothic", 1, 18)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(51, 51, 255));
-        jLabel2.setText("KAI PASSPHASE");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 270, -1, -1));
+        PasswordName.setBackground(new java.awt.Color(204, 204, 204));
+        PasswordName.setFont(new java.awt.Font("Showcard Gothic", 1, 18)); // NOI18N
+        PasswordName.setForeground(new java.awt.Color(51, 51, 255));
+        PasswordName.setText("KAI PASSPHASE");
+        getContentPane().add(PasswordName, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 270, -1, -1));
 
-        jLabel3.setFont(new java.awt.Font("Showcard Gothic", 1, 36)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(51, 51, 255));
-        jLabel3.setText("USER LOGIN");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 120, 250, -1));
+        USERLOGINNAME.setFont(new java.awt.Font("Showcard Gothic", 1, 36)); // NOI18N
+        USERLOGINNAME.setForeground(new java.awt.Color(51, 51, 255));
+        USERLOGINNAME.setText("USER LOGIN");
+        getContentPane().add(USERLOGINNAME, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 120, 250, -1));
 
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel4.setText("(Username):");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 200, 78, 20));
+        USERNAME.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        USERNAME.setText("(Username):");
+        getContentPane().add(USERNAME, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 200, 78, 20));
 
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel5.setText("(Password):");
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 270, -1, -1));
+        Passwordname.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        Passwordname.setText("(Password):");
+        getContentPane().add(Passwordname, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 270, -1, -1));
 
-        jButton1.setFont(new java.awt.Font("Showcard Gothic", 1, 18)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(51, 51, 255));
-        jButton1.setText("LOGIN");
-        jButton1.addActionListener(this::jButton1ActionPerformed);
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 370, 110, -1));
+        LoginButton.setFont(new java.awt.Font("Showcard Gothic", 1, 18)); // NOI18N
+        LoginButton.setForeground(new java.awt.Color(51, 51, 255));
+        LoginButton.setText("LOGIN");
+        LoginButton.addActionListener(this::LoginButtonActionPerformed);
+        getContentPane().add(LoginButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 370, 110, -1));
 
-        jLabel6.setText("To be come a Supersaiyan?");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 420, 180, 24));
+        nameREGISTER.setText("To be come a Supersaiyan?");
+        getContentPane().add(nameREGISTER, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 420, 180, 24));
 
-        jButton2.setFont(new java.awt.Font("Segoe UI", 2, 14)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(51, 51, 255));
-        jButton2.setText("Register Here");
-        jButton2.addActionListener(this::jButton2ActionPerformed);
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 420, -1, 20));
-        getContentPane().add(jPasswordField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 300, 250, 30));
+        ResgisterButton.setFont(new java.awt.Font("Segoe UI", 2, 14)); // NOI18N
+        ResgisterButton.setForeground(new java.awt.Color(51, 51, 255));
+        ResgisterButton.setText("Register Here");
+        ResgisterButton.addActionListener(this::ResgisterButtonActionPerformed);
+        getContentPane().add(ResgisterButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 420, -1, 20));
+        getContentPane().add(PasswordTextfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 300, 250, 30));
 
-        jCheckBox1.setText("Show Password");
-        jCheckBox1.addActionListener(this::jCheckBox1ActionPerformed);
-        getContentPane().add(jCheckBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 330, -1, -1));
+        ShowPassowrdButton.setText("Show Password");
+        ShowPassowrdButton.addActionListener(this::ShowPassowrdButtonActionPerformed);
+        getContentPane().add(ShowPassowrdButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 330, -1, -1));
 
-        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/guko vegeta 6.jpg"))); // NOI18N
-        jLabel7.setText("jLabel7");
-        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 860, 480));
+        Background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/guko vegeta 6.jpg"))); // NOI18N
+        Background.setText("jLabel7");
+        getContentPane().add(Background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 860, 480));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void usernameTextfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usernameTextfieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_usernameTextfieldActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void ResgisterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ResgisterButtonActionPerformed
         // TODO add your handling code here:
         new Register().setVisible(true); // open register
        this.dispose(); // close login
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_ResgisterButtonActionPerformed
 
-    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
+    private void ShowPassowrdButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ShowPassowrdButtonActionPerformed
         // TODO add your handling code here:
-        if(jCheckBox1.isSelected()){
-            jPasswordField1.setEchoChar((char)0); // show password
+        if(ShowPassowrdButton.isSelected()){
+            PasswordTextfield.setEchoChar((char)0); // show password
     } else {
-           jPasswordField1.setEchoChar('*'); // hide password
+           PasswordTextfield.setEchoChar('*'); // hide password
                     
         
        
        
         }
-    }//GEN-LAST:event_jCheckBox1ActionPerformed
+    }//GEN-LAST:event_ShowPassowrdButtonActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void LoginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginButtonActionPerformed
         // TODO add your handling code here:
-        String username = jTextField1.getText();
-String password = new String(jPasswordField1.getPassword());
+        String username = usernameTextfield.getText();
+        String password = new String(PasswordTextfield.getPassword());
 
-// TEMPORARY (for testing only)
-if(username.equals("admin") && password.equals("1234")){
-    javax.swing.JOptionPane.showMessageDialog(this, "Login Successful!");
-    
-    // open dashboard (optional)
-    // new Dashboard().setVisible(true);
-    // this.dispose();
-    
+// TEMP LOGIN (you can change later to MySQL)
+if (username.equals("admin") && password.equals("1234")) {
+
+            javax.swing.JOptionPane.showMessageDialog(this, "Login Successful!");
+
+            new Dashboard().setVisible(true);
+            this.dispose();
 } else {
     javax.swing.JOptionPane.showMessageDialog(this, "Invalid Username or Password!");
 }
         
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_LoginButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -166,17 +164,17 @@ if(username.equals("admin") && password.equals("1234")){
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JLabel Background;
+    private javax.swing.JButton LoginButton;
+    private javax.swing.JLabel PasswordName;
+    private javax.swing.JPasswordField PasswordTextfield;
+    private javax.swing.JLabel Passwordname;
+    private javax.swing.JButton ResgisterButton;
+    private javax.swing.JCheckBox ShowPassowrdButton;
+    private javax.swing.JLabel USERLOGINNAME;
+    private javax.swing.JLabel USERNAME;
+    private javax.swing.JLabel USERNAMENAME;
+    private javax.swing.JLabel nameREGISTER;
+    private javax.swing.JTextField usernameTextfield;
     // End of variables declaration//GEN-END:variables
 }
