@@ -136,7 +136,7 @@ private void loadFromFile() {
 
         jPanel1.setLayout(new java.awt.BorderLayout());
 
-        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setBackground(new java.awt.Color(0, 0, 0));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         LOGOUTBUTTON.setBackground(new java.awt.Color(255, 51, 0));
@@ -151,6 +151,7 @@ private void loadFromFile() {
 
         Searchname.setBackground(new java.awt.Color(255, 51, 0));
         Searchname.setFont(new java.awt.Font("Showcard Gothic", 2, 14)); // NOI18N
+        Searchname.setForeground(new java.awt.Color(255, 255, 255));
         Searchname.setText("Search:");
         jPanel2.add(Searchname, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 120, -1, -1));
 
@@ -164,6 +165,7 @@ private void loadFromFile() {
 
         sortname.setBackground(new java.awt.Color(255, 255, 255));
         sortname.setFont(new java.awt.Font("Showcard Gothic", 2, 12)); // NOI18N
+        sortname.setForeground(new java.awt.Color(255, 255, 255));
         sortname.setText("Sort:");
         jPanel2.add(sortname, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 110, -1, 20));
 
@@ -214,7 +216,7 @@ private void loadFromFile() {
         jPanel2.add(UPDATEBUTTON, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 240, 180, 40));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGES/gif GUKO (1).gif"))); // NOI18N
-        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 140, 190, 290));
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 140, 190, 290));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGES/dragonball-super1 (2)_1.jpg"))); // NOI18N
         jLabel1.setText("jLabel1");

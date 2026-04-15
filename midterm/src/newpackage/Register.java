@@ -81,7 +81,7 @@ public class Register extends javax.swing.JFrame {
         getContentPane().add(ShowPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 360, -1, -1));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGES/VEGETA (1) (1).gif"))); // NOI18N
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 0, 280, 490));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 280, 490));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
