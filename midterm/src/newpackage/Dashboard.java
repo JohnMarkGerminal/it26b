@@ -214,7 +214,7 @@ private void loadFromFile() {
         jPanel2.add(UPDATEBUTTON, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 240, 180, 40));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGES/gif GUKO (1).gif"))); // NOI18N
-        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 160, 200, 290));
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 140, 190, 290));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGES/dragonball-super1 (2)_1.jpg"))); // NOI18N
         jLabel1.setText("jLabel1");
