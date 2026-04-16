@@ -1,6 +1,5 @@
 package newpackage;
 
-import newpackage.LOGIN;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -30,6 +29,7 @@ public class Register extends javax.swing.JFrame {
         LoginButton = new javax.swing.JButton();
         ShowPassword = new javax.swing.JCheckBox();
         jLabel1 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
 
         jMenu1.setText("jMenu1");
 
@@ -39,49 +39,54 @@ public class Register extends javax.swing.JFrame {
         UsernameName.setFont(new java.awt.Font("Showcard Gothic", 1, 24)); // NOI18N
         UsernameName.setForeground(new java.awt.Color(255, 51, 51));
         UsernameName.setText("Username");
-        getContentPane().add(UsernameName, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 110, 172, -1));
+        getContentPane().add(UsernameName, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 70, 172, -1));
 
         usernameTextfield.addActionListener(this::usernameTextfieldActionPerformed);
-        getContentPane().add(usernameTextfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 140, 270, 39));
+        getContentPane().add(usernameTextfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 100, 270, 39));
 
         PasswordName.setFont(new java.awt.Font("Showcard Gothic", 1, 24)); // NOI18N
         PasswordName.setForeground(new java.awt.Color(255, 51, 51));
         PasswordName.setText("Password");
-        getContentPane().add(PasswordName, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 200, 190, 33));
+        getContentPane().add(PasswordName, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 160, 190, 33));
 
         passwordTextfield.addActionListener(this::passwordTextfieldActionPerformed);
-        getContentPane().add(passwordTextfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 230, 270, 37));
+        getContentPane().add(passwordTextfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 190, 270, 37));
 
         ConfirmPasswordName.setFont(new java.awt.Font("Showcard Gothic", 1, 24)); // NOI18N
         ConfirmPasswordName.setForeground(new java.awt.Color(255, 51, 51));
         ConfirmPasswordName.setText("Confirm Password");
-        getContentPane().add(ConfirmPasswordName, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 290, 260, -1));
+        getContentPane().add(ConfirmPasswordName, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 260, 260, -1));
 
         ConfirmPasswordTextfield.addActionListener(this::ConfirmPasswordTextfieldActionPerformed);
-        getContentPane().add(ConfirmPasswordTextfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 320, 270, 36));
+        getContentPane().add(ConfirmPasswordTextfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 290, 270, 36));
 
         AlreadyHaveanAccountName.setBackground(new java.awt.Color(255, 255, 255));
+        AlreadyHaveanAccountName.setForeground(new java.awt.Color(255, 255, 255));
         AlreadyHaveanAccountName.setText("Already have an Account?");
-        getContentPane().add(AlreadyHaveanAccountName, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 440, 152, 20));
+        getContentPane().add(AlreadyHaveanAccountName, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 420, 152, 20));
 
         RegisterButton.setFont(new java.awt.Font("Showcard Gothic", 1, 14)); // NOI18N
         RegisterButton.setForeground(new java.awt.Color(255, 51, 51));
         RegisterButton.setText("REGISTER");
         RegisterButton.addActionListener(this::RegisterButtonActionPerformed);
-        getContentPane().add(RegisterButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 390, 100, -1));
+        getContentPane().add(RegisterButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 370, 100, -1));
 
         LoginButton.setFont(new java.awt.Font("Showcard Gothic", 0, 12)); // NOI18N
         LoginButton.setForeground(new java.awt.Color(255, 51, 51));
         LoginButton.setText("LOGIN");
         LoginButton.addActionListener(this::LoginButtonActionPerformed);
-        getContentPane().add(LoginButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 430, 80, 30));
+        getContentPane().add(LoginButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 420, 80, 30));
 
+        ShowPassword.setForeground(new java.awt.Color(255, 255, 255));
         ShowPassword.setText("Show Password");
         ShowPassword.addActionListener(this::ShowPasswordActionPerformed);
-        getContentPane().add(ShowPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 360, -1, -1));
+        getContentPane().add(ShowPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 330, -1, -1));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGES/VEGETA (1) (1).gif"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 280, 490));
+
+        jPanel1.setBackground(new java.awt.Color(0, 0, 0));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 0, 410, 490));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -165,40 +170,8 @@ public class Register extends javax.swing.JFrame {
     private void LoginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginButtonActionPerformed
 
                                                   
-    Connection con = connectionDB.getConnection();
-
-    if (con == null) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Database not connected!");
-        return;
-    }
-
-    try {
-        String sql = "SELECT * FROM users WHERE username=? AND password=?";
-        PreparedStatement pst = con.prepareStatement(sql);
-
-        String user = usernameTextfield.getText();
-        String pass = new String(passwordTextfield.getPassword()); // FIXED
-
-        pst.setString(1, user);
-        pst.setString(2, pass);
-
-        ResultSet rs = pst.executeQuery();
-
-        if (rs.next()) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Login Successful!");
-            new Dashboard().setVisible(true);
-            this.dispose();
-        } else {
-            javax.swing.JOptionPane.showMessageDialog(this, "Incorrect Username or Password!");
-        }
-
-        rs.close();
-        pst.close();
-        con.close();
-
-    } catch (Exception e) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
-    }
+    new LOGIN().setVisible(true);
+        this.dispose();
 
 
     }//GEN-LAST:event_LoginButtonActionPerformed
@@ -258,6 +231,7 @@ public class Register extends javax.swing.JFrame {
     private javax.swing.JLabel UsernameName;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPasswordField passwordTextfield;
     private javax.swing.JTextField usernameTextfield;
     // End of variables declaration//GEN-END:variables

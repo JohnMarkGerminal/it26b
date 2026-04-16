@@ -36,6 +36,7 @@ public class LOGIN extends javax.swing.JFrame {
         ShowPassowrdButton = new javax.swing.JCheckBox();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 0, 0));
@@ -62,11 +63,13 @@ public class LOGIN extends javax.swing.JFrame {
         getContentPane().add(USERLOGINNAME, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 130, -1, -1));
 
         USERNAME.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        USERNAME.setForeground(new java.awt.Color(255, 255, 255));
         USERNAME.setText("(Username):");
         getContentPane().add(USERNAME, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 200, 78, 20));
 
         Passwordname.setBackground(new java.awt.Color(0, 0, 0));
         Passwordname.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        Passwordname.setForeground(new java.awt.Color(255, 255, 255));
         Passwordname.setText("(Password):");
         getContentPane().add(Passwordname, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 270, -1, -1));
 
@@ -76,8 +79,9 @@ public class LOGIN extends javax.swing.JFrame {
         LoginButton.addActionListener(this::LoginButtonActionPerformed);
         getContentPane().add(LoginButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 350, 110, -1));
 
+        nameREGISTER.setForeground(new java.awt.Color(255, 255, 255));
         nameREGISTER.setText("To be come a Supersaiyan?");
-        getContentPane().add(nameREGISTER, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 410, 180, 24));
+        getContentPane().add(nameREGISTER, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 420, 160, 24));
 
         ResgisterButton.setFont(new java.awt.Font("Segoe UI", 2, 14)); // NOI18N
         ResgisterButton.setForeground(new java.awt.Color(255, 51, 51));
@@ -88,6 +92,7 @@ public class LOGIN extends javax.swing.JFrame {
         PasswordTextfield.addActionListener(this::PasswordTextfieldActionPerformed);
         getContentPane().add(PasswordTextfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 300, 250, 30));
 
+        ShowPassowrdButton.setForeground(new java.awt.Color(255, 255, 255));
         ShowPassowrdButton.setText("Show Password");
         ShowPassowrdButton.addActionListener(this::ShowPassowrdButtonActionPerformed);
         getContentPane().add(ShowPassowrdButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 330, -1, -1));
@@ -100,6 +105,9 @@ public class LOGIN extends javax.swing.JFrame {
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGES/dragonball-super1 (2)_1.jpg"))); // NOI18N
         jLabel3.setText("jLabel3");
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 0, 320, 100));
+
+        jPanel1.setBackground(new java.awt.Color(0, 0, 0));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 860, 500));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -213,6 +221,7 @@ public class LOGIN extends javax.swing.JFrame {
     private javax.swing.JLabel USERNAMENAME;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel nameREGISTER;
     private javax.swing.JTextField usernameTextfield;
     // End of variables declaration//GEN-END:variables

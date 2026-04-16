@@ -1,25 +1,29 @@
 package newpackage;
 
 
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableRowSorter;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import javax.swing.JOptionPane;
 import javax.swing.RowSorter;
 import javax.swing.SortOrder;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JOptionPane;
 
 public class Dashboard extends javax.swing.JFrame {
     
+    private static final java.util.logging.Logger logger = 
+        java.util.logging.Logger.getLogger(Dashboard.class.getName());
     
     
-    ArrayList<String[]> saiyans = new ArrayList<>();
-    TableRowSorter<DefaultTableModel> sorter;
+    
     DefaultTableModel model;
+    TableRowSorter<DefaultTableModel> sorter;    
     
     
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Dashboard.class.getName());
 
     /**
      * Creates new form Dashboard
@@ -35,78 +39,38 @@ public class Dashboard extends javax.swing.JFrame {
     sorter = new TableRowSorter<>(model);
     scroll.setRowSorter(sorter);
 
-    loadFromFile(); 
+    loadSaiyans(); 
 
   
 
     
 }
-
-    
-    private String encrypt(String text, int shift) {
-    StringBuilder sb = new StringBuilder();
-
-    for (char c : text.toCharArray()) {
-        sb.append((char)(c + shift));
-    }
-
-    return sb.toString();
-}
-
-private String decrypt(String text, int shift) {
-    StringBuilder sb = new StringBuilder();
-
-    for (char c : text.toCharArray()) {
-        sb.append((char)(c - shift));
-    }
-
-    return sb.toString();
-}
-
-private void saveToFile() {
-    try (java.io.PrintWriter pw =
-         new java.io.PrintWriter(new java.io.FileWriter("saiyan_data.txt"))) {
-
-        for (int i = 0; i < model.getRowCount(); i++) {
-
-            String line =
-                    model.getValueAt(i, 0) + "," +
-                    model.getValueAt(i, 1) + "," +
-                    model.getValueAt(i, 2) + "," +
-                    model.getValueAt(i, 3);
-
-            pw.println(encrypt(line, 3));
-        }
-
-    } catch (Exception e) {
-        javax.swing.JOptionPane.showMessageDialog(this,
-            "Error saving file!");
-    }
-}
-
-private void loadFromFile() {
-    try (java.io.BufferedReader br =
-         new java.io.BufferedReader(new java.io.FileReader("saiyan_data.txt"))) {
-
+public void loadSaiyans() {
         model.setRowCount(0);
-        saiyans.clear(); // ✅ IMPORTANT
 
-        String line;
+        try {
+            Connection con = connectionDB.getConnection();
+            String sql = "SELECT name, power_level, transformation, universe FROM saiyans";
+            PreparedStatement pst = con.prepareStatement(sql);
+            ResultSet rs = pst.executeQuery();
 
-        while ((line = br.readLine()) != null) {
+            while (rs.next()) {
+                model.addRow(new Object[]{
+                    rs.getString("name"),
+                    rs.getInt("power_level"),
+                    rs.getString("transformation"),
+                    rs.getString("universe")
+                });
+            }
 
-            String decrypted = decrypt(line, 3);
-            String[] data = decrypted.split(",");
+            rs.close();
+            pst.close();
+            con.close();
 
-            saiyans.add(data);   // ✅ ADD THIS
-            model.addRow(data);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
         }
-
-    } catch (Exception e) {
-        javax.swing.JOptionPane.showMessageDialog(this,
-            "Successfull Login!");
     }
-}
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -233,10 +197,10 @@ private void loadFromFile() {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 974, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 980, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -249,183 +213,178 @@ private void loadFromFile() {
 
     private void SortButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SortButtonActionPerformed
         // TODO add your handling code here:     
-     String selected = SortButton.getSelectedItem().toString();
+        String selected = SortButton.getSelectedItem().toString();
+        List<RowSorter.SortKey> sortKeys = new ArrayList<>();
 
-    List<RowSorter.SortKey> sortKeys = new ArrayList<>();
+        switch (selected) {
+            case "Name":
+                sortKeys.add(new RowSorter.SortKey(0, SortOrder.ASCENDING));
+                break;
+            case "Power":
+                sortKeys.add(new RowSorter.SortKey(1, SortOrder.DESCENDING));
+                break;
+            case "Transform":
+                sortKeys.add(new RowSorter.SortKey(2, SortOrder.ASCENDING));
+                break;
+            case "Universe":
+                sortKeys.add(new RowSorter.SortKey(3, SortOrder.ASCENDING));
+                break;
+        }
 
-    switch (selected) {
-
-        case "Name":
-            sortKeys.add(new RowSorter.SortKey(0, SortOrder.ASCENDING));
-            break;
-
-        case "Power":
-            sortKeys.add(new RowSorter.SortKey(1, SortOrder.DESCENDING));
-            break;
-
-        case "Transform":
-            sortKeys.add(new RowSorter.SortKey(2, SortOrder.ASCENDING));
-            break;
-
-        case "Universe":
-            sortKeys.add(new RowSorter.SortKey(3, SortOrder.ASCENDING));
-            break;
-    }
-
-    sorter.setSortKeys(sortKeys);
-    sorter.sort();
+        sorter.setSortKeys(sortKeys);
+        sorter.sort();
     }//GEN-LAST:event_SortButtonActionPerformed
 
     private void searchBUTTONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBUTTONActionPerformed
         // TODO add your handling code here:
         String search = searchBUTTON.getText().toLowerCase();
 
-    javax.swing.table.TableRowSorter<DefaultTableModel> sorter =
-            (javax.swing.table.TableRowSorter<DefaultTableModel>) scroll.getRowSorter();
+        for (int i = 0; i < model.getRowCount(); i++) {
+            String name = model.getValueAt(i, 0).toString().toLowerCase();
 
-    if (sorter == null) {
-        sorter = new javax.swing.table.TableRowSorter<>(model);
-        scroll.setRowSorter(sorter);
-    }
-
-    for (int i = 0; i < model.getRowCount(); i++) {
-
-        String name = model.getValueAt(i, 0).toString().toLowerCase();
-
-        if (name.contains(search)) {
-
-            int viewRow = scroll.convertRowIndexToView(i);
-            scroll.setRowSelectionInterval(viewRow, viewRow);
-            return;
+            if (name.contains(search)) {
+                int viewRow = scroll.convertRowIndexToView(i);
+                scroll.setRowSelectionInterval(viewRow, viewRow);
+                return;
+            }
         }
-    }
 
-    javax.swing.JOptionPane.showMessageDialog(this, "No match found!");
+        JOptionPane.showMessageDialog(this, "No match found!");
 
     }//GEN-LAST:event_searchBUTTONActionPerformed
 
     private void LOGOUTBUTTONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LOGOUTBUTTONActionPerformed
         // TODO add your handling code here:
-        int confirm = javax.swing.JOptionPane.showConfirmDialog(
-            this,
-            "Are you sure you want to logout?",
-            "Logout",
-            javax.swing.JOptionPane.YES_NO_OPTION
-    );
+        int confirm = JOptionPane.showConfirmDialog(
+                this,
+                "Are you sure you want to logout?",
+                "Logout",
+                JOptionPane.YES_NO_OPTION
+        );
 
-    if (confirm == javax.swing.JOptionPane.YES_OPTION) {
-        new LOGIN().setVisible(true);
-        this.dispose();
-    }
+        if (confirm == JOptionPane.YES_OPTION) {
+            new LOGIN().setVisible(true);
+            this.dispose();
+        }
 
      
     }//GEN-LAST:event_LOGOUTBUTTONActionPerformed
 
     private void DELETEBUTTONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DELETEBUTTONActionPerformed
         // TODO add your handling code here:
-int selected = scroll.getSelectedRow();
+        int selected = scroll.getSelectedRow();
 
-if (selected == -1) {
-    JOptionPane.showMessageDialog(this, "Select a row first!");
-    return;
-}
+        if (selected == -1) {
+            JOptionPane.showMessageDialog(this, "Select a row first!");
+            return;
+        }
 
-int row = scroll.convertRowIndexToModel(selected);
+        String name = model.getValueAt(selected, 0).toString();
 
-    if (row == -1) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Select a row first!");
-        return;
-    }
+        try {
+            Connection con = connectionDB.getConnection();
+            String sql = "DELETE FROM saiyans WHERE name=?";
+            PreparedStatement pst = con.prepareStatement(sql);
 
-    saiyans.remove(row);
-    model.removeRow(row);
-    
-    saveToFile();
+            pst.setString(1, name);
+            pst.executeUpdate();
 
-  
+            JOptionPane.showMessageDialog(this, "Deleted!");
 
-    javax.swing.JOptionPane.showMessageDialog(this, "Deleted & Saved!");
+            loadSaiyans();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+        }
 
 
     }//GEN-LAST:event_DELETEBUTTONActionPerformed
 
     private void UPDATEBUTTONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UPDATEBUTTONActionPerformed
         // TODO add your handling code here:
-  int selected = scroll.getSelectedRow();
+        int selected = scroll.getSelectedRow();
 
-if (selected == -1) {
-    JOptionPane.showMessageDialog(this, "Select a row first!");
-    return;
-}
+        if (selected == -1) {
+            JOptionPane.showMessageDialog(this, "Select a row first!");
+            return;
+        }
 
-int row = scroll.convertRowIndexToModel(selected);
-    if (row == -1) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Select a row!");
-        return;
-    }
+        String oldName = model.getValueAt(selected, 0).toString();
 
-    String name = javax.swing.JOptionPane.showInputDialog(this, "New Name:", saiyans.get(row)[0]);
-    String power = javax.swing.JOptionPane.showInputDialog(this, "New Power:", saiyans.get(row)[1]);
-    String transform = javax.swing.JOptionPane.showInputDialog(this, "New Transformation:", saiyans.get(row)[2]);
-    String universe = javax.swing.JOptionPane.showInputDialog(this, "New Universe:", saiyans.get(row)[3]);
+        String name = JOptionPane.showInputDialog(this, "New Name:", oldName);
+        String power = JOptionPane.showInputDialog(this, "New Power:");
+        String transform = JOptionPane.showInputDialog(this, "New Transformation:");
+        String universe = JOptionPane.showInputDialog(this, "New Universe:");
 
-    String[] updated = {name, power, transform, universe};
+        try {
+            Connection con = connectionDB.getConnection();
+            String sql = "UPDATE saiyans SET name=?, power_level=?, transformation=?, universe=? WHERE name=?";
+            PreparedStatement pst = con.prepareStatement(sql);
 
-    saiyans.set(row, updated);
-    
-    saveToFile();
-    model.setValueAt(name, row, 0);
-    model.setValueAt(power, row, 1);
-    model.setValueAt(transform, row, 2);
-    model.setValueAt(universe, row, 3);
+            pst.setString(1, name);
+            pst.setInt(2, Integer.parseInt(power));
+            pst.setString(3, transform);
+            pst.setString(4, universe);
+            pst.setString(5, oldName);
 
+            pst.executeUpdate();
 
+            JOptionPane.showMessageDialog(this, "Updated!");
 
-    javax.swing.JOptionPane.showMessageDialog(this, "Updated & Saved!");
+            loadSaiyans();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+        }
     }//GEN-LAST:event_UPDATEBUTTONActionPerformed
 
     private void READBUTTONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_READBUTTONActionPerformed
         // TODO add your handling code here:
-  int row = scroll.convertRowIndexToModel(scroll.getSelectedRow());
+        int row = scroll.getSelectedRow();
 
-    if (row == -1) {
-        javax.swing.JOptionPane.showMessageDialog(this,
-            "Please select a Saiyan first!");
-        return;
-    }
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "Select a Saiyan first!");
+            return;
+        }
 
-    String[] s = saiyans.get(row);
+        String message =
+                "🔥 SAIYAN DETAILS 🔥\n"
+                        + "Name: " + model.getValueAt(row, 0) + "\n"
+                        + "Power Level: " + model.getValueAt(row, 1) + "\n"
+                        + "Transformation: " + model.getValueAt(row, 2) + "\n"
+                        + "Universe: " + model.getValueAt(row, 3);
 
-    String message =
-            "🔥 SAIYAN DETAILS 🔥\n"
-          + "Name: " + s[0] + "\n"
-          + "Power Level: " + s[1] + "\n"
-          + "Transformation: " + s[2] + "\n"
-          + "Universe: " + s[3];
-
-    javax.swing.JOptionPane.showMessageDialog(this, message);
+        JOptionPane.showMessageDialog(this, message);
     }//GEN-LAST:event_READBUTTONActionPerformed
 
     private void CREATEBUTTONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CREATEBUTTONActionPerformed
         // TODO add your handling code here:
         
         
-    String name = javax.swing.JOptionPane.showInputDialog(this, "Enter Name:");
-    String power = javax.swing.JOptionPane.showInputDialog(this, "Enter Power Level:");
-    String transform = javax.swing.JOptionPane.showInputDialog(this, "Enter Transformation:");
-    String universe = javax.swing.JOptionPane.showInputDialog(this, "Enter Universe:");
+    String name = JOptionPane.showInputDialog(this, "Enter Name:");
+        String power = JOptionPane.showInputDialog(this, "Enter Power Level:");
+        String transform = JOptionPane.showInputDialog(this, "Enter Transformation:");
+        String universe = JOptionPane.showInputDialog(this, "Enter Universe:");
 
-    if (name == null || power == null || transform == null || universe == null) return;
+        try {
+            Connection con = connectionDB.getConnection();
+            String sql = "INSERT INTO saiyans(name, power_level, transformation, universe) VALUES (?, ?, ?, ?)";
+            PreparedStatement pst = con.prepareStatement(sql);
 
-    String[] newSaiyan = {name, power, transform, universe};
+            pst.setString(1, name);
+            pst.setInt(2, Integer.parseInt(power));
+            pst.setString(3, transform);
+            pst.setString(4, universe);
 
-    saiyans.add(newSaiyan);
-    model.addRow(newSaiyan);
-    
-    saveToFile();
+            pst.executeUpdate();
 
+            JOptionPane.showMessageDialog(this, "Saiyan Added!");
 
-    javax.swing.JOptionPane.showMessageDialog(this, "Saiyan Added & Saved!");
+            loadSaiyans();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+        }
 
 
 
