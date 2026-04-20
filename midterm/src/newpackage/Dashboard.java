@@ -38,6 +38,7 @@ public class Dashboard extends javax.swing.JFrame {
     model.setRowCount(0);
     sorter = new TableRowSorter<>(model);
     scroll.setRowSorter(sorter);
+    SortButton.setEditable(false);
 
     loadSaiyans(); 
 
@@ -47,6 +48,8 @@ public class Dashboard extends javax.swing.JFrame {
 }
 public void loadSaiyans() {
         model.setRowCount(0);
+        
+        
 
         try {
             Connection con = connectionDB.getConnection();
@@ -213,6 +216,8 @@ public void loadSaiyans() {
 
     private void SortButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SortButtonActionPerformed
         // TODO add your handling code here:     
+        scroll.clearSelection(); // optional
+
         String selected = SortButton.getSelectedItem().toString();
         List<RowSorter.SortKey> sortKeys = new ArrayList<>();
 
@@ -232,7 +237,8 @@ public void loadSaiyans() {
         }
 
         sorter.setSortKeys(sortKeys);
-        sorter.sort();
+
+       
     }//GEN-LAST:event_SortButtonActionPerformed
 
     private void searchBUTTONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBUTTONActionPerformed

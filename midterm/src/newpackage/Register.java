@@ -137,7 +137,7 @@ public class Register extends javax.swing.JFrame {
             rs.close();
             checkPst.close();
 
-            // INSERT USER
+            
             String sql = "INSERT INTO users(username, password) VALUES (?, ?)";
             PreparedStatement pst = con.prepareStatement(sql);
 
